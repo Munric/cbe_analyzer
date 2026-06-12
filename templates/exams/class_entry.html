@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow p-4">
+
+    <h3 class="mb-4">Marks Entry System</h3>
+
+    <!-- =========================
+         FILTER FORM
+    ========================== -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="hidden" name="action" value="load">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <label>Grade</label>
+                <select name="grade" class="form-control" required>
+                    <option value="">Select Grade</option>
+                    {% for g in grades %}
+                        <option value="{{ g }}"
+                            {% if selected_grade == g %}selected{% endif %}>
+                            {{ g }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Subject</label>
+                <select name="subject" class="form-control" required>
+                    <option value="">Select Subject</option>
+                    {% for s in subjects %}
+                        <option value="{{ s.id }}"
+                            {% if selected_subject == s.id|stringformat:"s" %}selected{% endif %}>
+                            {{ s.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Exam</label>
+                <select name="exam" class="form-control" required>
+                    <option value="">Select Exam</option>
+                    {% for e in exams %}
+                        <option value="{{ e.id }}"
+                            {% if selected_exam == e.id|stringformat:"s" %}selected{% endif %}>
+                            {{ e.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+        <button class="btn btn-primary mt-3">
+            Load Learners
+        </button>
+    </form>
+
+    <!-- =========================
+         MARKS TABLE
+    ========================== -->
+    {% if learners %}
+
+    <hr>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="hidden" name="action" value="save">
+        <input type="hidden" name="grade" value="{{ selected_grade }}">
+        <input type="hidden" name="subject" value="{{ selected_subject }}">
+        <input type="hidden" name="exam" value="{{ selected_exam }}">
+
+        <table class="table table-bordered mt-4">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Assessment No</th>
+                    <th>Name</th>
+                    <th>Marks (0 - 100)</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for learner in learners %}
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>{{ learner.assessment_no }}</td>
+
+                    <td>
+                        {{ learner.first_name }} {{ learner.last_name }}
+                    </td>
+
+                    <td>
+                        <input type="number"
+                               name="marks_{{ learner.id }}"
+                               class="form-control marks-input"
+                               min="0"
+                               max="100"
+                               step="1"
+                               inputmode="numeric"
+                               value="{{ learner.saved_marks }}">
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <button class="btn btn-success">
+            Save Marks
+        </button>
+
+    </form>
+
+    {% endif %}
+
+</div>
+
+<!-- =========================
+     JAVASCRIPT VALIDATION
+========================== -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const inputs = document.querySelectorAll(".marks-input");
+
+    inputs.forEach((input, index) => {
+
+        // =========================
+        // BLOCK DECIMALS + RANGE
+        // =========================
+        input.addEventListener("input", function () {
+
+            // remove decimals instantly
+            this.value = this.value.replace(/\./g, "");
+
+            // force range
+            if (this.value !== "") {
+                let val = parseInt(this.value);
+
+                if (val > 100) this.value = 100;
+                if (val < 0) this.value = 0;
+            }
+        });
+
+        // =========================
+        // ENTER NAVIGATION
+        // =========================
+        input.addEventListener("keydown", function (e) {
+
+            if (e.key === "Enter") {
+                e.preventDefault();
+
+                const next = inputs[index + 1];
+
+                if (next) {
+                    next.focus();
+                    next.select();
+                }
+            }
+        });
+
+    });
+
+});
+</script>
+
+{% endblock %}

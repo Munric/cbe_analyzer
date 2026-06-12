@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-dark text-white">
+        <h3>Learner Details</h3>
+    </div>
+
+    <div class="card-body">
+
+        <h4>
+            {{ learner.first_name }}
+            {{ learner.last_name }}
+        </h4>
+
+        <hr>
+
+        <p>
+            <strong>Assessment No:</strong>
+            {{ learner.assessment_no }}
+        </p>
+
+        <p>
+            <strong>Gender:</strong>
+            {{ learner.gender }}
+        </p>
+
+        <p>
+            <strong>Grade:</strong>
+            {{ learner.grade }}
+        </p>
+
+        <p>
+            <strong>Parent Name:</strong>
+            {{ learner.parent_name }}
+        </p>
+
+        <p>
+            <strong>Parent Phone:</strong>
+            {{ learner.parent_phone }}
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

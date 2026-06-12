@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-danger text-white">
+        <h3>Delete Learner</h3>
+    </div>
+
+    <div class="card-body">
+
+        <p>
+
+            Are you sure you want to delete
+
+            <strong>
+                {{ learner.first_name }}
+                {{ learner.last_name }}
+            </strong>?
+
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <button class="btn btn-danger">
+                Yes Delete
+            </button>
+
+            <a href="{% url 'learner_list' %}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

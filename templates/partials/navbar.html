@@ -1,0 +1,26 @@
+<nav class="navbar navbar-dark bg-primary sticky-top">
+
+    <div class="container-fluid">
+
+        <a class="navbar-brand fw-bold" href="#">
+            CBE Analyzer
+        </a>
+
+        <div class="text-white">
+            Welcome Admin
+        </div>
+
+    </div>
+
+</nav>
+
+{% if request.session.school_id %}
+
+<span class="badge bg-success">
+
+    Current School:
+    {{ current_school.name }}
+
+</span>
+
+{% endif %}

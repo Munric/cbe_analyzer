@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    CBE Analyzer Dashboard
+</h2>
+
+<div class="row">
+
+    <!-- Total Learners -->
+    <div class="col-md-4 mb-4">
+
+        <div class="card bg-primary text-white shadow h-100">
+
+            <div class="card-body text-center">
+
+                <h5>
+                    Total Learners
+                </h5>
+
+                <h1>
+                    {{ learners }}
+                </h1>
+
+                <a href="{% url 'learner_list' %}"
+                   class="btn btn-light mt-2">
+
+                    Open Learners
+
+                </a>
+
+                <a href="{% url 'teacher_results' %}"
+                   class="btn btn-success">
+                   View Results
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Exam Entry -->
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow h-100">
+
+            <div class="card-body text-center">
+
+                <h1>
+                    📝
+                </h1>
+
+                <h4>
+                    Exam Entry
+                </h4>
+
+                <p>
+                    Open class list and enter learner marks.
+                </p>
+
+                <a href="{% url 'class_entry' %}"
+                   class="btn btn-primary">
+
+                    Open Class Entry
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Analytics -->
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow h-100">
+
+            <div class="card-body text-center">
+
+                <h1>
+                    📊
+                </h1>
+
+                <h4>
+                    Analytics Dashboard
+                </h4>
+
+                <p>
+                    View learner performance and analytics.
+                </p>
+
+                <a href="{% url 'analytics_dashboard' %}"
+                   class="btn btn-dark">
+
+                    View Analytics
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+
+    <!-- Exams -->
+    <div class="col-md-6 mb-4">
+
+        <div class="card bg-success text-white shadow h-100">
+
+            <div class="card-body text-center">
+
+                <h5>
+                    Exams
+                </h5>
+
+                <h1>
+                    0
+                </h1>
+
+                <p>
+                    Total exams configured
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SMS -->
+    <div class="col-md-6 mb-4">
+
+        <div class="card bg-danger text-white shadow h-100">
+
+            <div class="card-body text-center">
+
+                <h5>
+                    SMS Sent
+                </h5>
+
+                <h1>
+                    0
+                </h1>
+
+                <p>
+                    Notification statistics
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

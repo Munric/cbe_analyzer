@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Enter Exam Results</h2>
+
+<div class="card">
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit"
+            class="btn btn-primary">
+                Save Results
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

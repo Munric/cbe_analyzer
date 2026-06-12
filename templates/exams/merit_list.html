@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load exam_filters %}
+
+{% block content %}
+
+<div class="card shadow p-4">
+
+    <h3 class="mb-4">
+        Grade {{ grade }} Merit List
+    </h3>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Rank</th>
+                    <th>Assessment No</th>
+                    <th>Learner Name</th>
+                    <th>Class</th>
+
+                    {% for subject in subjects %}
+                        <th>{{ subject.name }}</th>
+                    {% endfor %}
+
+                    <th>Total</th>
+                    <th>Scale</th>
+                    <th>Average</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for row in data %}
+
+                <tr>
+
+                    <td>{{ row.rank }}</td>
+
+                    <td>{{ row.learner.assessment_no }}</td>
+
+                    <td>
+                        {{ row.learner.first_name }}
+                        {{ row.learner.last_name }}
+                    </td>
+
+                    <td>{{ row.stream }}</td>
+
+                    {% for subject in subjects %}
+
+                        {% with result=row.subjects|get_item:subject.name %}
+
+                        <td>
+                            {{ result.marks }}
+                            <br>
+                            <small>({{ result.grade }})</small>
+                        </td>
+
+                        {% endwith %}
+
+                    {% endfor %}
+
+                    <td>
+                        <strong>{{ row.total }}</strong>
+                    </td>
+
+                    <td>
+                        <strong>{{ row.total_grade }}</strong>
+                    </td>
+
+                    <td>
+                        {{ row.average|floatformat:2 }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<a href="{% url 'merit_pdf' exam_id grade %}"
+   class="btn btn-danger mb-3">
+    Download Merit List PDF
+</a>
+{% endblock %}

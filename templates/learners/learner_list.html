@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h3>
+            Learners Management
+        </h3>
+
+        <a href="{% url 'add_learner' %}"
+           class="btn btn-primary">
+            + Add Learner
+        </a>
+
+    </div>
+
+    <!-- CLASS CARDS -->
+    <div class="row mb-4">
+
+        <div class="col-md-3 mb-3">
+
+            <a href="{% url 'learner_list' %}"
+               class="text-decoration-none">
+
+                <div class="card shadow border-0">
+
+                    <div class="card-body text-center">
+
+                        <h5>
+                            All Classes
+                        </h5>
+
+                        <h3>
+                           {% for card in class_cards %}
+                           {% endfor %}
+                           {{ total_learners }}
+                        </h3>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        {% for card in class_cards %}
+
+        <div class="col-md-3 mb-3">
+
+            <a href="?grade={{ card.grade }}"
+               class="text-decoration-none">
+
+                <div class="card shadow border-0
+                    {% if selected_grade == card.grade %}
+                        border-primary
+                    {% endif %}
+                ">
+
+                    <div class="card-body text-center">
+
+                        <h5>
+                            {{ card.grade }}
+                        </h5>
+
+                        <h3>
+                            {{ card.total }}
+                        </h3>
+
+                        <small>
+                            Learners
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- SELECTED CLASS -->
+    {% if selected_grade %}
+
+    <div class="alert alert-info">
+
+        Showing learners in
+
+        <strong>
+            {{ selected_grade }}
+        </strong>
+
+    </div>
+
+    {% endif %}
+
+  {% if selected_grade %}
+
+<div class="card shadow">
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table class="table table-striped table-bordered">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>#</th>
+                        <th>Assessment No</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Class</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for learner in learners %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+
+                        <td>{{ learner.assessment_no }}</td>
+
+                        <td>{{ learner.first_name }}</td>
+
+                        <td>{{ learner.last_name }}</td>
+
+                        <td>{{ learner.grade }}</td>
+
+                        <td>
+
+                            <a href="{% url 'learner_detail' learner.pk %}"
+                               class="btn btn-sm btn-info">
+                                View
+                            </a>
+
+                            <a href="{% url 'edit_learner' learner.pk %}"
+                               class="btn btn-sm btn-warning">
+                                Edit
+                            </a>
+
+                            <a href="{% url 'delete_learner' learner.pk %}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Delete learner?')">
+                                Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No learners found
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}  
+
+<a href="{% url 'import_learners' %}"
+   class="btn btn-success">
+    Import Learners
+</a>
+
+{% if selected_grade %}
+
+<div class="alert alert-info">
+    Showing learners in
+    <strong>{{ selected_grade }}</strong>
+</div>
+
+<div class="table-responsive">
+
+    <table class="table table-bordered">
+
+        <!-- your table -->
+
+    </table>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+{% load exam_filters %}
+
+{% block content %}
+
+<div class="card shadow p-4">
+
+    <h3 class="mb-4">
+        Teacher Results View
+    </h3>
+
+    <!-- FILTER FORM -->
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="row">
+
+            <!-- Exam -->
+            <div class="col-md-5">
+
+                <label class="form-label">
+                    Select Exam
+                </label>
+
+                <select
+                    name="exam"
+                    class="form-control"
+                    required
+                >
+
+                    <option value="">
+                        Select Exam
+                    </option>
+
+                    {% for exam in exams %}
+
+                    <option
+                        value="{{ exam.id }}"
+                        {% if selected_exam == exam.id|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ exam.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Grade -->
+            <div class="col-md-5">
+
+                <label class="form-label">
+                    Select Grade
+                </label>
+
+                <select
+                    name="grade"
+                    class="form-control"
+                    required
+                >
+
+                    <option value="">
+                        Select Grade
+                    </option>
+
+                    {% for grade in grades %}
+
+                    <option
+                        value="{{ grade }}"
+                        {% if selected_grade == grade %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ grade }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Button -->
+            <div class="col-md-2">
+
+                <button
+                    class="btn btn-primary w-100 mt-4"
+                >
+                    View Results
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    {% if data %}
+
+    <hr>
+
+    <h5 class="mb-3">
+        Results for {{ selected_grade }}
+    </h5>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-striped">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Assessment No
+                    </th>
+
+                    <th>
+                        Learner Name
+                    </th>
+
+                    {% for sub in subjects %}
+
+                        <th>
+                            {{ sub.name }}
+                        </th>
+
+                        <th>
+                            Grade
+                        </th>
+
+                    {% endfor %}
+
+                    <th>
+                        Total
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for d in data %}
+
+                <tr>
+
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+
+                    <td>
+                        {{ d.learner.assessment_no }}
+                    </td>
+
+                    <td>
+                        {{ d.learner.first_name }}
+                        {{ d.learner.last_name }}
+                    </td>
+
+                    {% for sub in subjects %}
+
+                    <td>
+                        {{ d.subjects|get_item:sub.name|get_item:"marks" }}
+                    </td>
+
+                    <td>
+                        <strong>
+                            {{ d.subjects|get_item:sub.name|get_item:"grade" }}
+                        </strong>
+                    </td>
+
+                    {% endfor %}
+
+                    <td>
+                        <strong>
+                            {{ d.total }}
+                        </strong>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

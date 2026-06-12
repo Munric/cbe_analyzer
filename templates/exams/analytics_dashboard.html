@@ -1,0 +1,280 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Analytics Dashboard
+    </h2>
+
+    <!-- TOP CARDS -->
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+
+            <div class="card bg-primary text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>
+                        Total Learners
+                    </h5>
+
+                    <h1>
+                        {{ total_learners }}
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card bg-success text-white shadow">
+
+                <div class="card-body text-center">
+
+                    <h5>
+                        Total Results
+                    </h5>
+
+                    <h1>
+                        {{ total_results }}
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+        <!-- SUBJECT AVERAGES -->
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-header bg-dark text-white">
+
+                    Subject Averages
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered">
+
+                        <thead class="table-light">
+
+                            <tr>
+                                <th>Subject</th>
+                                <th>Average</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for s in subject_averages %}
+
+                            <tr>
+
+                                <td>
+                                    {{ s.subject__name }}
+                                </td>
+
+                                <td>
+                                    {{ s.avg_marks|floatformat:2 }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- GRADE DISTRIBUTION -->
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-header bg-success text-white">
+
+                    CBC Grade Distribution
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered">
+
+                        <thead class="table-light">
+
+                            <tr>
+                                <th>Grade</th>
+                                <th>Count</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for g in grade_distribution %}
+
+                            <tr>
+
+                                <td>
+                                    {{ g.grade }}
+                                </td>
+
+                                <td>
+                                    {{ g.count }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+        <!-- TOP LEARNERS -->
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-header bg-primary text-white">
+
+                    Top Performing Learners
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-striped">
+
+                        <thead>
+
+                            <tr>
+                                <th>Learner</th>
+                                <th>Total</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for learner in top_learners %}
+
+                            <tr>
+
+                                <td>
+                                    {{ learner.learner__first_name }}
+                                    {{ learner.learner__last_name }}
+                                </td>
+
+                                <td>
+                                    {{ learner.total }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WEAK LEARNERS -->
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-header bg-danger text-white">
+
+                    Weak Learners
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-striped">
+
+                        <thead>
+
+                            <tr>
+                                <th>Learner</th>
+                                <th>Total</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for learner in weak_learners %}
+
+                            <tr>
+
+                                <td>
+                                    {{ learner.learner__first_name }}
+                                    {{ learner.learner__last_name }}
+                                </td>
+
+                                <td>
+                                    {{ learner.total }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

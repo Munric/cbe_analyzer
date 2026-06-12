@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+        <h3>
+            {% if form.instance.pk %}
+                Edit Learner
+            {% else %}
+                Add Learner
+            {% endif %}
+        </h3>
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+                {{ form.assessment_no.label_tag }}
+                {{ form.assessment_no }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.gender.label_tag }}
+                {{ form.gender }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.grade.label_tag }}
+                {{ form.grade }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.parent_name.label_tag }}
+                {{ form.parent_name }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.parent_phone.label_tag }}
+                {{ form.parent_phone }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.date_of_birth.label_tag }}
+                {{ form.date_of_birth }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.learner_photo.label_tag }}
+                {{ form.learner_photo }}
+            </div>
+
+            <button type="submit"
+                    class="btn btn-success">
+                Save Learner
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
